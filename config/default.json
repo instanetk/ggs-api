@@ -1,4 +1,4 @@
 {
   "db": "mongodb://localhost/ggs",
-  "jwtPrivateKey": ""
+  "jwtPrivateKey": "ggs_jwtPrivateKey"
 }

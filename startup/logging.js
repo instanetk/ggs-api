@@ -20,7 +20,9 @@ module.exports = function () {
     new winston.transports.MongoDB({
       db: 'mongodb://localhost/ggs',
       level: 'info',
-      useUnifiedTopology: true,
+      options: {
+        useUnifiedTopology: true,
+      },
     })
   );
 };
