@@ -21,6 +21,8 @@
     "helmet": "^4.2.0",
     "joi": "^17.3.0",
     "joi-objectid": "^3.0.1",
+    "joi-phone-number": "^5.0.0",
+    "joi-us-zipcode": "^2.0.6",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.11.5",

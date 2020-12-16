@@ -1,13 +1,15 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+// const Phone = require('joi-phone-number');
+// const Joi = BaseJoi.extend(Phone);
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 1,
     maxlength: 50,
   },
   email: {
@@ -23,7 +25,23 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024,
   },
+  zip: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 5,
+  },
+  phone: {
+    type: String,
+    required: true,
+    minlength: 9,
+    maxlength: 13,
+  },
   isAdmin: Boolean,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Insert a new method called generateAuthToken() into the userSchema object
@@ -39,9 +57,11 @@ const User = mongoose.model('User', userSchema);
 function validateUser(user) {
   // Joi schema now uses Joi.object({})
   const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
+    name: Joi.string().min(1).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
     password: Joi.string().min(5).max(1024).required(),
+    zip: Joi.string().min(5).max(5).required(),
+    phone: Joi.string().min(9).max(13).required(),
   });
 
   // Joi.validate() is now deprecated.
