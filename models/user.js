@@ -37,6 +37,7 @@ const userSchema = new mongoose.Schema({
     minlength: 9,
     maxlength: 13,
   },
+  marketing: Boolean,
   isAdmin: Boolean,
   date: {
     type: Date,
@@ -62,6 +63,7 @@ function validateUser(user) {
     password: Joi.string().min(5).max(1024).required(),
     zip: Joi.string().min(5).max(5).required(),
     phone: Joi.string().min(9).max(13).required(),
+    marketing: Joi.bool(),
   });
 
   // Joi.validate() is now deprecated.
