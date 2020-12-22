@@ -39,6 +39,8 @@ const userSchema = new mongoose.Schema({
   },
   marketing: Boolean,
   isAdmin: Boolean,
+  isProvider: Boolean,
+  isValidated: Boolean,
   date: {
     type: Date,
     default: Date.now,

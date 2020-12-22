@@ -3,6 +3,7 @@ const cors = require('cors');
 // const customers = require('../routes/customers');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
+const categories = require('../routes/categories');
 // const error = require('../middleware/error');
 const bodyParser = require('body-parser');
 
@@ -12,5 +13,6 @@ module.exports = function (app) {
   app.use(cors());
   app.use('/api/users', users);
   app.use('/api/auth', auth);
+  app.use('/api/categories', categories);
   // app.use(error);
 };
