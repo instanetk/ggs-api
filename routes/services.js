@@ -1,28 +1,29 @@
 const auth = require('../middleware/auth');
-const { Category, validate } = require('../models/category');
+const { Service, validate } = require('../models/service');
 const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const categories = await Category.find({});
-  res.send(categories);
+  const services = await Service.find({});
+  res.send(services);
 });
 
 router.post('/', auth, async (req, res) => {
   if (!req.user.isAdmin)
     return res.status(403).send('The server understood the request, but is refusing to fulfill it.');
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let category = await Category.findOne({ name: req.body.name });
-  if (category) return res.status(400).send('Category already registered.');
+  let service = await Service.findOne({ name: req.body.name });
+  if (service) return res.status(400).send('Service already exists');
 
-  category = new Category(_.pick(req.body, ['name', 'i18n', 'image', 'weight', 'featured']));
+  service = new Service(_.pick(req.body, ['name', 'category', 'i18n', 'image', 'weight', 'featured']));
 
-  await category.save();
+  await service.save();
 
-  res.send(category);
+  res.send(service);
 });
 
 module.exports = router;

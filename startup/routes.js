@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-// const customers = require('../routes/customers');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
 const categories = require('../routes/categories');
+const services = require('../routes/services');
 // const error = require('../middleware/error');
 const bodyParser = require('body-parser');
 
@@ -14,5 +14,6 @@ module.exports = function (app) {
   app.use('/api/users', users);
   app.use('/api/auth', auth);
   app.use('/api/categories', categories);
+  app.use('/api/services', services);
   // app.use(error);
 };
