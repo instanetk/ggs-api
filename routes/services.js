@@ -5,52 +5,41 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const services = await Service.find({});
-  res.send(services);
-});
+  const route = req.query.category;
+  let category;
+  switch (route) {
+    case 'coverings':
+      category = { category: '5fe14f240acbe8ed7dd727ad' };
+      break;
+    case 'irrigation':
+      category = { category: '5fe14fd00acbe8ed7dd727ae' };
+      break;
+    case 'painting':
+      category = { category: '5fe1881b797ee9f13bb9944d' };
+      break;
+    case 'cleaning':
+      category = { category: '5fe189e35f1c602e5a661d1c' };
+      break;
+    case 'plumbing':
+      category = { category: '5fe18a365f1c602e5a661d1d' };
+      break;
+    case 'pavers':
+      category = { category: '5fe18a5d5f1c602e5a661d1e' };
+      break;
+    case 'granite':
+      category = { category: '5fe18a895f1c602e5a661d1f' };
+      break;
+    case 'pool':
+      category = { category: '5fe18aa85f1c602e5a661d20' };
+      break;
+    case 'misc':
+      category = { category: '5fe23b979c1f9f1f35f8c362' };
+      break;
+    default:
+      category = {};
+  }
 
-router.get('/coverings', async (req, res) => {
-  const services = await Service.find({ category: '5fe14f240acbe8ed7dd727ad' });
-  res.send(services);
-});
-
-router.get('/irrigation', async (req, res) => {
-  const services = await Service.find({ category: '5fe14fd00acbe8ed7dd727ae' });
-  res.send(services);
-});
-
-router.get('/painting', async (req, res) => {
-  const services = await Service.find({ category: '5fe1881b797ee9f13bb9944d' });
-  res.send(services);
-});
-
-router.get('/cleaning', async (req, res) => {
-  const services = await Service.find({ category: '5fe189e35f1c602e5a661d1c' });
-  res.send(services);
-});
-
-router.get('/plumbing', async (req, res) => {
-  const services = await Service.find({ category: '5fe18a365f1c602e5a661d1d' });
-  res.send(services);
-});
-
-router.get('/pavers', async (req, res) => {
-  const services = await Service.find({ category: '5fe18a5d5f1c602e5a661d1e' });
-  res.send(services);
-});
-
-router.get('/granite', async (req, res) => {
-  const services = await Service.find({ category: '5fe18a895f1c602e5a661d1f' });
-  res.send(services);
-});
-
-router.get('/pool', async (req, res) => {
-  const services = await Service.find({ category: '5fe18aa85f1c602e5a661d20' });
-  res.send(services);
-});
-
-router.get('/misc', async (req, res) => {
-  const services = await Service.find({ category: '5fe23b979c1f9f1f35f8c362' });
+  const services = await Service.find(category);
   res.send(services);
 });
 
