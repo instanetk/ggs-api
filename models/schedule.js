@@ -26,6 +26,12 @@ const scheduleSchema = new mongoose.Schema({
     minLength: 5,
     maxLength: 255,
   },
+  service: {
+    type: String,
+    required: true,
+    minLength: 5,
+    maxLength: 255,
+  },
   submitted: {
     type: Date,
     default: Date.now,
@@ -41,6 +47,7 @@ function validateSchedule(appointment) {
     phone: Joi.string().min(10).max(255).required(),
     address: Joi.string().min(5).max(255).required(),
     date: Joi.string().min(5).max(255).required(),
+    service: Joi.string().min(5).max(255).required(),
   });
 
   // Joi.validate() is now deprecated.

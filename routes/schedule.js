@@ -13,9 +13,11 @@ router.post('/', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let schedule = await Schedule.findOne({ phone: req.body.phone });
-  if (schedule) return res.status(400).send('Appointment already set.');
+  // if (schedule) return res.status(400).send('Appointment already set.');
 
-  schedule = new Schedule(_.pick(req.body, ['name', 'phone', 'address', 'date']));
+  schedule = new Schedule(_.pick(req.body, ['name', 'phone', 'address', 'service', 'date']));
+
+  require('./mail')(schedule);
 
   await schedule.save();
 
