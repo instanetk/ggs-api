@@ -4,7 +4,14 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const schedule = await Schedule.find({});
+  const from = req.query.from;
+  const to = req.query.to;
+  const schedule = await Schedule.find({
+    date: {
+      $gte: new Date(from),
+      $lt: new Date(to),
+    },
+  });
   res.send(schedule);
 });
 
