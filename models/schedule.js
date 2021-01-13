@@ -21,10 +21,8 @@ const scheduleSchema = new mongoose.Schema({
     maxLength: 255,
   },
   date: {
-    type: String,
+    type: Date,
     required: true,
-    minLength: 5,
-    maxLength: 255,
   },
   service: {
     type: String,
@@ -35,6 +33,10 @@ const scheduleSchema = new mongoose.Schema({
   submitted: {
     type: Date,
     default: Date.now,
+  },
+  completed: {
+    type: Boolean,
+    default: false,
   },
 });
 

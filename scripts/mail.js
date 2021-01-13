@@ -3,18 +3,6 @@ const nodemailer = require('nodemailer');
 
 // async..await is not allowed in global scope, must use a wrapper
 module.exports = async function (message) {
-  const email = `A new estimate request from ${message.name} has been received for a ${message.service} at ${message.address} on ${message.date}. 
-  
-  You may reach this customer at ${message.phone} to confirm or reschedule. 
-  
-  This request was received on ${message.submitted}`;
-
-  const emailHTML = `A new estimate request from <b>${message.name}</b> has been received for a <b>${message.service}</b> at <b>${message.address}</b> on <b>${message.date}</b>. 
-  <br/><br/>
-  You may reach this customer at <b>${message.phone}</b> to confirm or reschedule. 
-  </br/><br/>
-  This request was received on <b>${message.submitted}</b>`;
-
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   //   let testAccount = await nodemailer.createTestAccount();
@@ -36,19 +24,19 @@ module.exports = async function (message) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"General Global Services, LLC" <main@generalglobalservices.com>', // sender address
+    from: '"General Global Services" <main@generalglobalservices.com>', // sender address
     to: process.env.ESTIMATE_RECIPIENT, // list of receivers
     subject: '✅ New Appointment', // Subject line
-    text: email, // plain text body
-    html: emailHTML, // html body
+    text: message.text, // plain text body
+    html: message.html, // html body
   });
 
   let text = await transporter.sendMail({
-    from: '"General Global Services, LLC" <main@generalglobalservices.com>', // sender address
+    from: '"General Global Services" <main@generalglobalservices.com>', // sender address
     subject: '> New Appointment',
     to: process.env.ESTIMATE_TEXT, // list of receivers
-    text: email, // plain text body
-    html: email, // plain text body
+    text: message.text, // plain text body
+    html: message.html, // html body
   });
 
   console.log('Message sent: %s', info.messageId);
