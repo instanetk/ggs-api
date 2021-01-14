@@ -3,27 +3,44 @@ const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const from = req.query.from;
-  const to = req.query.to;
-  const schedule = await Schedule.find({
-    date: {
-      $gte: new Date(from),
-      $lt: new Date(to),
-    },
-  });
+router.get('/list', async (req, res) => {
+  const { from, to } = req.query;
+
+  let schedule;
+  if (from === to) {
+    schedule = await Schedule.find({
+      date: new Date(from),
+    });
+  } else {
+    schedule = await Schedule.find({
+      date: {
+        $gte: new Date(from),
+        $lt: new Date(to),
+      },
+    });
+  }
+
   res.send(schedule);
 });
 
+router.get('/appointment', async (req, res) => {
+  const { id } = req.query;
+
+  const appointment = await Schedule.find({ _id: id });
+
+  res.send(appointment);
+});
+
 router.post('/', async (req, res) => {
+  console.log(req.body);
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let schedule = await Schedule.findOne({ phone: req.body.phone });
   // if (schedule) return res.status(400).send('Appointment already set.');
 
-  schedule = new Schedule(_.pick(req.body, ['name', 'phone', 'address', 'service', 'date']));
-
+  schedule = new Schedule(_.pick(req.body, ['name', 'phone', 'address', 'service', 'date', 'coordinates']));
+  console.log(schedule);
   const date = {
     appointment: new Date(schedule.date).toDateString(),
     submitted: new Date(schedule.submitted).toDateString() + ' at ' + new Date(schedule.submitted).toTimeString(),
@@ -41,9 +58,12 @@ router.post('/', async (req, res) => {
     This request was received on <b>${date.submitted}</b>`,
   };
 
-  require('../scripts/mail')(message);
-
-  await schedule.save();
+  try {
+    await schedule.save();
+    require('../scripts/mail')(message);
+  } catch (ex) {
+    console.log(ex.message);
+  }
 
   res.send(schedule);
 });
