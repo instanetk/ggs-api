@@ -27,8 +27,23 @@ router.get('/appointment', async (req, res) => {
   const { id } = req.query;
 
   const appointment = await Schedule.find({ _id: id });
+  if (!appointment) return res.status(404).send({ name: 'No such appointment' });
 
   res.send(appointment);
+});
+
+router.put('/appointment', async (req, res) => {
+  const { id } = req.query;
+
+  const appointment = await Schedule.findById(id);
+  if (!appointment) return;
+  console.log('PUT', appointment);
+
+  appointment.completed = !appointment.completed;
+
+  const result = await appointment.save();
+
+  res.send(result);
 });
 
 router.post('/', async (req, res) => {
