@@ -38,9 +38,10 @@ const scheduleSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  completed: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    minLength: 5,
+    maxLength: 11,
   },
   notes: {
     type: String,

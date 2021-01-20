@@ -37,9 +37,35 @@ router.put('/appointment', async (req, res) => {
 
   const appointment = await Schedule.findById(id);
   if (!appointment) return;
-  console.log('PUT', appointment);
 
-  appointment.completed = !appointment.completed;
+  // console.log('status', appointment.status);
+  // console.log('object', appointment);
+
+  const status = ['active', 'contacted', 'visited', 'completed'];
+  const index = status.indexOf(appointment.status);
+
+  let set;
+
+  switch (index) {
+    case 0:
+      set = 'contacted';
+      break;
+    case 1:
+      set = 'visited';
+      break;
+    case 2:
+      set = 'completed';
+      break;
+    case 3:
+      set = 'active';
+    default:
+    case -1:
+      set = 'active';
+  }
+
+  appointment.status = set;
+
+  // console.log(appointment.status, status[index], index);
 
   const result = await appointment.save();
 

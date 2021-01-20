@@ -18,7 +18,7 @@ module.exports = function () {
   winston.add(new winston.transports.Console());
   winston.add(
     new winston.transports.MongoDB({
-      db: 'mongodb://localhost/ggs',
+      db: "mongodb+srv://ggs:mprWM4p8bRhIw'yaS(@v,@cluster0.qjrb1.mongodb.net/ggs?retryWrites=true&w=majority",
       level: 'info',
       options: {
         useUnifiedTopology: true,
