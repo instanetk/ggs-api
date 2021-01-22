@@ -48,19 +48,19 @@ router.put('/appointment', async (req, res) => {
 
   switch (index) {
     case 0:
-      set = 'contacted';
+      set = status[1];
       break;
     case 1:
-      set = 'visited';
+      set = status[2];
       break;
     case 2:
-      set = 'completed';
+      set = status[3];
       break;
     case 3:
-      set = 'active';
+      set = status[0];
     default:
     case -1:
-      set = 'active';
+      set = status[0];
   }
 
   appointment.status = set;

@@ -42,6 +42,7 @@ const scheduleSchema = new mongoose.Schema({
     type: String,
     minLength: 5,
     maxLength: 11,
+    default: 'active',
   },
   notes: {
     type: String,
