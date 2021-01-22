@@ -14,29 +14,27 @@ require('./startup/config')();
 require('./startup/validation')();
 require('dotenv').config();
 
+// Function to call on Change Stream event
 const onChangeStream = (change) => {
   io.emit('update-requested', 'DB Changed');
   console.log(new Date());
   console.log('type:', change.operationType);
 };
-
+// MongoDB Change Stream listener
 const changeStream = Schedule.watch().on('change', (change) => onChangeStream(change));
 
-// let count = 0;
-// io.on('connection', (socket) => {
-//   count++;
-//   console.log('new connection', count);
-//   socket.on('update', (message) => {
-//     console.log(message);
-//     io.emit('update-requested', 'hello client');
-//     // const changeStream = Schedule.watch().on('change', (change) => onChangeStream(change));
-//   });
-//   socket.on('disconnect', () => {
-//     count--;
-//     console.log('goodbye', count);
-//     // io.emit('count', 'goodbye');
-//   });
-// });
+let count = 0;
+// Count number of online users
+io.on('connection', (socket) => {
+  count++;
+  io.emit('userCount', count);
+  // console.log('connect', count);
+  socket.on('disconnect', () => {
+    count--;
+    io.emit('userCount', count);
+    // console.log('disconnect', count);
+  });
+});
 
 const port = process.env.PORT || 9000;
 
