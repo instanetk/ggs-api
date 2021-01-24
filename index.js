@@ -29,12 +29,12 @@ let count = 0;
 io.on('connection', (socket) => {
   count++;
   io.emit('userCount', count);
-  io.emit('userOn');
+  io.emit('userOn', count);
   // console.log('connect', count);
   socket.on('disconnect', () => {
     count--;
     io.emit('userCount', count);
-    io.emit('userOff'); // To play disconnect sound on client
+    io.emit('userOff', count); // To play disconnect sound on client
     // console.log('disconnect', count);
   });
 });

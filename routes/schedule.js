@@ -10,14 +10,14 @@ router.get('/list', async (req, res) => {
   if (from === to) {
     schedule = await Schedule.find({
       date: new Date(from),
-    });
+    }).sort({ date: 1 });
   } else {
     schedule = await Schedule.find({
       date: {
         $gte: new Date(from),
         $lt: new Date(to),
       },
-    });
+    }).sort({ date: 1 });
   }
 
   res.send(schedule);
