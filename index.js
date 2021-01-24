@@ -1,6 +1,6 @@
 const winston = require('winston');
 const express = require('express');
-const { EIO } = require('constants');
+// const { EIO } = require('constants');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -16,6 +16,7 @@ require('dotenv').config();
 
 // Function to call on Change Stream event
 const onChangeStream = (change) => {
+  if (change.operationType === 'insert') io.emit('new-lead', 'New Lead');
   io.emit('update-requested', 'DB Changed');
   console.log(new Date());
   console.log('type:', change.operationType);
@@ -28,10 +29,12 @@ let count = 0;
 io.on('connection', (socket) => {
   count++;
   io.emit('userCount', count);
+  io.emit('userOn');
   // console.log('connect', count);
   socket.on('disconnect', () => {
     count--;
     io.emit('userCount', count);
+    io.emit('userOff'); // To play disconnect sound on client
     // console.log('disconnect', count);
   });
 });
