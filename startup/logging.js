@@ -1,6 +1,7 @@
 const winston = require('winston');
 require('winston-mongodb');
 require('express-async-errors');
+require('dotenv').config();
 
 module.exports = function () {
   winston.createLogger({
@@ -13,12 +14,12 @@ module.exports = function () {
   process.on('unhandledRejection', (ex) => {
     throw ex;
   });
-
+  let db = process.env.DB;
   winston.add(new winston.transports.File({ filename: 'logfile.log' }));
   winston.add(new winston.transports.Console());
   winston.add(
     new winston.transports.MongoDB({
-      db: "mongodb+srv://ggs:mprWM4p8bRhIw'yaS(@v,@cluster0.qjrb1.mongodb.net/ggs?retryWrites=true&w=majority",
+      db: db,
       level: 'info',
       options: {
         useUnifiedTopology: true,

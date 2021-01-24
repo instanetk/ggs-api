@@ -1,4 +1,1 @@
-{
-  "db": "mongodb+srv://ggs:mprWM4p8bRhIw'yaS(@v,@cluster0.qjrb1.mongodb.net/ggs?retryWrites=true&w=majority",
-  "jwtPrivateKey": "ggs_jwtPrivateKey"
-}
+{}
