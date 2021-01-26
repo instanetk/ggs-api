@@ -13,7 +13,7 @@ RUN npm ci --only=production
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 9000
 
 CMD [ "node", "index.js" ]
 

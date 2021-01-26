@@ -1,6 +1,5 @@
 const winston = require('winston');
 const express = require('express');
-// const { EIO } = require('constants');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);

@@ -1,4 +1,5 @@
-const config = require('config');
+// const config = require('config');
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 // const Phone = require('joi-phone-number');
@@ -49,8 +50,9 @@ const userSchema = new mongoose.Schema({
 
 // Insert a new method called generateAuthToken() into the userSchema object
 userSchema.methods.generateAuthToken = function () {
+  const jwtPrivateKey = process.env.JWT;
   // Create a JSON Web Token
-  const token = jwt.sign({ _id: this._id, name: this.name, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
+  const token = jwt.sign({ _id: this._id, name: this.name, isAdmin: this.isAdmin }, jwtPrivateKey);
   return token;
 };
 

@@ -80,7 +80,9 @@ router.post('/', async (req, res) => {
   let schedule = await Schedule.findOne({ phone: req.body.phone });
   // if (schedule) return res.status(400).send('Appointment already set.');
 
-  schedule = new Schedule(_.pick(req.body, ['name', 'phone', 'address', 'service', 'date', 'coordinates']));
+  schedule = new Schedule(
+    _.pick(req.body, ['name', 'phone', 'address', 'service', 'email', 'note', 'date', 'coordinates'])
+  );
   console.log(schedule);
   const date = {
     appointment: new Date(schedule.date).toDateString(),
