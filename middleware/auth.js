@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
 
   try {
     const jwtPrivateKey = process.env.JWT;
-    const decoded = jwt.verify(token, config.get(jwtPrivateKey));
+    const decoded = jwt.verify(token, jwtPrivateKey);
     req.user = decoded;
     next();
   } catch (ex) {
