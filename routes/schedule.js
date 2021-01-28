@@ -72,8 +72,16 @@ router.put('/appointment', async (req, res) => {
   res.send(result);
 });
 
+router.delete('/appointment', async (req, res) => {
+  const { id } = req.query;
+
+  await Schedule.deleteOne({ _id: id });
+
+  res.send('deleted');
+});
+
 router.post('/', async (req, res) => {
-  console.log(req.body.date);
+  console.log(req.body.date, req.body);
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -89,14 +97,23 @@ router.post('/', async (req, res) => {
     submitted: new Date(schedule.submitted).toDateString() + ' at ' + new Date(schedule.submitted).toTimeString(),
   };
   const message = {
-    text: `A new estimate request from ${schedule.name} has been received for a ${schedule.service} at ${schedule.address} on ${date.appointment}. 
+    text: `A new estimate request from ${schedule.name} has been received for a ${schedule.service} at ${
+      schedule.address
+    } on ${date.appointment}. 
+
+    They said the following: ${schedule.note || 'No note appended.'}
   
-    You may reach this customer at ${schedule.phone} to confirm or reschedule. 
+    You may reach this customer at ${schedule.phone} to confirm or reschedule. Their email is ${schedule.email} .
     
     This request was received on ${date.submitted}`,
-    html: `A new estimate request from <b>${schedule.name}</b> has been received for a <b>${schedule.service}</b> at <b>${schedule.address}</b> on <b>${date.appointment}</b>. 
+    html: `A new estimate request from <b>${schedule.name}</b> has been received for a <b>${
+      schedule.service
+    }</b> at <b>${schedule.address}</b> on <b>${date.appointment}</b>. 
     <br/><br/>
-    You may reach this customer at <b>${schedule.phone}</b> to confirm or reschedule. 
+    They said the following: ${schedule.note || 'No note appended.'}
+    <br/><br/>
+
+    You may reach this customer at <b>${schedule.phone}</b> to confirm or reschedule. Their email is ${schedule.email} .
     </br/><br/>
     This request was received on <b>${date.submitted}</b>`,
   };

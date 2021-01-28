@@ -28,6 +28,7 @@ const scheduleSchema = new mongoose.Schema({
   },
   note: {
     type: String,
+    required: false,
     minLength: 0,
     maxLength: 1024,
   },
@@ -71,7 +72,7 @@ function validateSchedule(appointment) {
     date: Joi.string().min(5).max(255).required(),
     service: Joi.string().min(5).max(255).required(),
     email: Joi.string().email().min(5).max(255).required(),
-    note: Joi.string().min(0).max(1024),
+    note: Joi.string().allow('').optional(),
     coordinates: Joi.object().required(),
   });
 
