@@ -18,9 +18,9 @@ router.post('/', async (req, res) => {
 
   let testimonial = new Testimonial(_.pick(req.body, ['name', 'email', 'testimonial', 'language']));
 
-  let schedule = await Schedule.find({ email: req.body.email });
-  // console.log(schedule[0]);
-  if (schedule) testimonial.city = schedule[0].coordinates;
+  // let schedule = await Schedule.find({ email: req.body.email });
+  // console.log(schedule[0].coordinates, schedule);
+  // if (schedule[0].coordinates) testimonial.city = schedule[0].coordinates;
 
   try {
     await testimonial.save();
