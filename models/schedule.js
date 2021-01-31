@@ -5,7 +5,7 @@ const scheduleSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minLength: 5,
+    minLength: 2,
     maxLength: 255,
   },
   phone: {
@@ -59,6 +59,10 @@ const scheduleSchema = new mongoose.Schema({
   notes: {
     type: String,
   },
+  testimonial: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Schedule = mongoose.model('Schedule', scheduleSchema);
@@ -66,7 +70,7 @@ const Schedule = mongoose.model('Schedule', scheduleSchema);
 function validateSchedule(appointment) {
   // Joi schema now uses Joi.object({})
   const schema = Joi.object({
-    name: Joi.string().min(5).max(255).required(),
+    name: Joi.string().min(2).max(255).required(),
     phone: Joi.string().min(10).max(255).required(),
     address: Joi.string().min(5).max(255).required(),
     date: Joi.string().min(5).max(255).required(),
