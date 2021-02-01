@@ -7,9 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   let testimonials = await Testimonial.find();
 
-  let testimony = testimonials[Math.floor(Math.random() * testimonials.length)];
-
-  res.send(testimony);
+  res.send(testimonials);
 });
 
 router.post('/', async (req, res) => {
