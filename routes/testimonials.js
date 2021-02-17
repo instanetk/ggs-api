@@ -29,4 +29,22 @@ router.post('/', async (req, res) => {
   res.send(testimonial);
 });
 
+router.put('/', async (req, res) => {
+  const { id } = req.query;
+  const testimonial = await Testimonial.findById(id);
+  if (!testimonial) return;
+
+  testimonial.published = !testimonial.published;
+
+  testimonial.save();
+});
+
+router.delete('/', async (req, res) => {
+  const { id } = req.query;
+
+  await Testimonial.deleteOne({ _id: id });
+
+  res.send('deleted');
+});
+
 module.exports = router;
