@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let testimonial = new Testimonial(_.pick(req.body, ['name', 'email', 'testimonial', 'language']));
+  let testimonial = new Testimonial(_.pick(req.body, ['name', 'email', 'zip', 'testimonial', 'language']));
 
   // let schedule = await Schedule.find({ email: req.body.email });
   // console.log(schedule[0].coordinates, schedule);

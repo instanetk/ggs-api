@@ -14,6 +14,12 @@ const testimonialSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 255,
   },
+  zip: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 5,
+  },
   city: {
     type: Object,
   },
@@ -46,6 +52,7 @@ function validateSchedule(testimonial) {
   const schema = Joi.object({
     name: Joi.string().min(2).max(255).required(),
     email: Joi.string().email().min(5).max(255).required(),
+    zip: Joi.string().min(5).max(5).required(),
     testimonial: Joi.string().min(5).max(5120).required(),
     language: Joi.string().min(2).max(2).required(),
   });
