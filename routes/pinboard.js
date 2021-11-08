@@ -38,6 +38,12 @@ router.put('/like/:id', async (req, res) => {
   res.send(pin);
 });
 
+router.delete('/:id', async (req, res) => {
+  await Pinboard.deleteOne({ _id: req.params.id });
+
+  res.send('deleted');
+});
+
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
