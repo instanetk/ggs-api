@@ -13,6 +13,7 @@
   "author": "David Quintero",
   "license": "ISC",
   "dependencies": {
+    "@zohocrm/nodejs-sdk": "^2.0.0",
     "bcrypt": "^5.0.0",
     "config": "^3.3.3",
     "cors": "^2.8.5",
