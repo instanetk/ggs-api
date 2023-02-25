@@ -1,4 +1,4 @@
-FROM node:14.15.4-alpine3.10
+FROM node:14.20.1-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -8,7 +8,8 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm ci --only=production
+# RUN npm ci --only=production --legacy-peer-deps
+RUN yarn
 
 # Bundle app source
 COPY . .
