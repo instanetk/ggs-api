@@ -1,6 +1,6 @@
 {
   "name": "ggs-api",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "API for General Global Services",
   "main": "index.js",
   "scripts": {
@@ -13,13 +13,14 @@
   "author": "David Quintero",
   "license": "ISC",
   "dependencies": {
-    "@zohocrm/nodejs-sdk": "^2.0.0",
+    "axios": "^1.3.4",
     "bcrypt": "^5.0.0",
     "config": "^3.3.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "form-data": "^4.0.0",
     "helmet": "^4.2.0",
     "joi": "^17.3.0",
     "joi-objectid": "^3.0.1",

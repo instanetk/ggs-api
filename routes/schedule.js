@@ -1,7 +1,12 @@
+const axios = require('axios');
+const FormData = require('form-data');
+require('dotenv').config();
 const { Schedule, validate } = require('../models/schedule');
 const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
+
+const CRM_URL = process.env.ZOHO_WEBLEAD_FUNCTION_URL;
 
 router.get('/list', async (req, res) => {
   const { from, to } = req.query;
@@ -89,7 +94,7 @@ router.post('/', async (req, res) => {
   // if (schedule) return res.status(400).send('Appointment already set.');
 
   schedule = new Schedule(
-    _.pick(req.body, ['name', 'phone', 'address', 'service', 'email', 'note', 'date', 'coordinates'])
+    _.pick(req.body, ['name', 'last', 'phone', 'address', 'service', 'email', 'note', 'date', 'coordinates'])
   );
   console.log(schedule);
   const date = {
@@ -117,6 +122,32 @@ router.post('/', async (req, res) => {
     </br/><br/>
     This request was received on <b>${date.submitted}</b>`,
   };
+
+  const crmPayload = {
+    Lead_Source: 'Web App',
+    Lead_Status: 'Not Contacted',
+    First_Name: req.body.name,
+    Last_Name: req.body.last,
+    Phone: req.body.phone,
+    Email: req.body.email,
+    Address_1_Formatted: req.body.address,
+    Date: new Date(req.body.date).toLocaleDateString('en-US', { timeZone: 'UTC' }),
+    Description: req.body.note,
+    Service: req.body.service,
+  };
+
+  console.log(crmPayload);
+
+  const payload = new FormData();
+  payload.append('arguments', JSON.stringify(crmPayload));
+
+  try {
+    const result = await axios.post(CRM_URL, payload);
+
+    console.log('ZOHO FUNCTION CALLED', result.data);
+  } catch (ex) {
+    console.log(ex);
+  }
 
   try {
     await schedule.save();

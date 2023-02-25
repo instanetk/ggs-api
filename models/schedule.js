@@ -8,6 +8,12 @@ const scheduleSchema = new mongoose.Schema({
     minLength: 2,
     maxLength: 255,
   },
+  last: {
+    type: String,
+    required: true,
+    minLength: 2,
+    maxLength: 255,
+  },
   phone: {
     type: String,
     required: true,
@@ -71,6 +77,7 @@ function validateSchedule(appointment) {
   // Joi schema now uses Joi.object({})
   const schema = Joi.object({
     name: Joi.string().min(2).max(255).required(),
+    last: Joi.string().min(2).max(255).required(),
     phone: Joi.string().min(10).max(255).required(),
     address: Joi.string().min(5).max(255).required(),
     date: Joi.string().min(5).max(255).required(),
